@@ -1,0 +1,15 @@
+# Local Wi-Fi credentials: never commit this file.
+secrets.h
+
+# Build outputs
+build/
+.pio/
+*.elf
+*.bin
+*.map
+*.hex
+
+# OS/editor files
+.DS_Store
+desktop.ini
+.vscode/
