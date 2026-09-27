@@ -48,10 +48,17 @@ The public test broker `mqttgo.io:1883` does not provide encrypted transport in 
 
 ## Build and upload
 
-1. Install the Arduino ESP32 board package and select **ESP32 Dev Module**.
-2. Install the `Bonezegei_DHT11`, `PubSubClient`, `Adafruit GFX Library`, and `Adafruit SSD1306` libraries.
+1. In Arduino IDE, install the Espressif **esp32** board package and select **ESP32 Dev Module**. This sketch uses the classic ESP32 camera driver and AI Thinker OV2640 pin map; confirm your board and camera wiring match that hardware before uploading.
+2. Install `Bonezegei_DHT11`, `PubSubClient`, `Adafruit GFX Library`, and `Adafruit SSD1306` from Library Manager.
 3. Create the local `secrets.h` file as described above.
 4. Open `esp32-iot-learning-project.ino`, compile, then upload to the ESP32.
-5. Open Serial Monitor at **115200 baud** to view connection and sensor status.
+5. Open Serial Monitor at **115200 baud**. Check the startup messages, Wi-Fi/MQTT status, camera initialization, and sensor readings.
+
+Exact Arduino IDE, ESP32 board-package, and library versions were not preserved with this project. They are intentionally marked **unknown** rather than inferred from unrelated build files. See [reproducibility notes](docs/REPRODUCIBILITY.md) for the known setup and a verification sequence.
+
+## Project records
+
+- [Reproducibility and environment record](docs/REPRODUCIBILITY.md): known requirements, missing version information, and step-by-step checks.
+- [Evidence index](docs/EVIDENCE.md): what evidence is available, what is not in this repository, and how to add it safely.
 
 The ESP32 camera and mbedTLS Base64 headers are supplied by the ESP32 platform package.

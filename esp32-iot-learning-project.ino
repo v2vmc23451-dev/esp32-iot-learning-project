@@ -251,6 +251,7 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 
   if (strcmp(topic, CAMERA_TRIGGER_TOPIC) == 0) {
     if (strcmp(valueText, "1") == 0) {
+      // Defer capture/publication to loop() instead of doing long work in the MQTT callback.
       photoRequested = true;
       Serial.println("Photo request received");
     }
@@ -259,6 +260,7 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 
   float value = atof(valueText);
   value = constrain(value, 0.0f, 1.0f);
+  // The phone dashboard sends normalized brightness; convert it to 8-bit PWM duty.
   const uint8_t pwm = static_cast<uint8_t>(roundf(value * 255.0f));
 
   if (strcmp(topic, MQTT_GREEN_TOPIC) == 0) {
@@ -345,7 +347,7 @@ void updateDisplay(uint32_t now) {
   display.print("Uptime: ");
   display.print(now / 1000UL);
   display.println(" s");
-  display.println("DHT11 GPIO17  I2C OK");
+  display.println("DHT11 GPIO4  I2C OK");
   display.println("RGB MQTT CONTROL");
   drawRobotIcon(now);
   drawSineGraphic(now);
@@ -398,6 +400,7 @@ void setup() {
 
 void loop() {
   const uint32_t now = millis();
+  // Coordinate the display, network, camera request, heartbeat, and sensor tasks.
   updateDisplay(now);
 
   if (WiFi.status() != WL_CONNECTED) {
